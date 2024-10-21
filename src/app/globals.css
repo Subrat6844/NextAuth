@@ -1,17 +1,17 @@
-
-.circle{
-    transition: all ;
-   animation: scale 0.3s ease-in-out 1;
-}
-@keyframes scale {
-    from{
-        transform: translate(-50%, -50%) scale(0);
-    }
-    to{
-        transform: translate(-50%,-50%) scale(1);
-    }
-}
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+/* .circle {
+    transition: all;
+    animation: scale 0.3s ease-in-out 1;
+}
 
+@keyframes scale {
+    from {
+        transform: translate(-50%, -50%) scale(0);
+    }
+
+    to {
+        transform: translate(-50%, -50%) scale(1);
+    }
+} */
