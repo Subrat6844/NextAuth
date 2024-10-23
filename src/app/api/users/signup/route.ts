@@ -3,13 +3,16 @@ import { sendMail } from "@/helpers/mailer";
 import User from "@/models/userModel";
 import bcryptjs from "bcryptjs";
 import { NextRequest, NextResponse } from "next/server";
-dbConnection();
+
+dbConnection().then(() => console.log("MongoDB connected"))
+
 
 export async function POST(request: NextRequest) {
 	try {
 		const body = await request.json();
 		const { userName, email, password } = body;
-
+		console.log(body);
+		
 		if (!userName || !email || !password) {
 			return NextResponse.json(
 				{ error: "All fields are required" },
