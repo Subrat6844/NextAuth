@@ -1,24 +1,31 @@
 import User from "@/models/userModel";
+import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 import { v4 as uuid } from "uuid";
 export const sendMail = async ({ email, mailType, userId }: any) => {
 	try {
 		const token = uuid();
 		if (mailType === "verifyEmail") {
-			await User.findByIdAndUpdate(userId,  {
+			const updatedUser = await User.findByIdAndUpdate(userId,  {
 				$set: {
 				  verifyToken: token,
 				  verifyTokenExpiry: Date.now() + 3600000,
 				},
-			  });
+			  },{new:true});
+			  if (!updatedUser) {
+				return NextResponse.json({error:"User Not Found"},{status:404})
+			  }
 		}
 		if (mailType === "forgotPassword") {
-			await User.findByIdAndUpdate(userId, {
+			const updatedUser = await User.findByIdAndUpdate(userId, {
 				$set: {
 				  forgotPasswordToken: token,
 				  forgotPasswordExpiry: Date.now() + 3600000,
 				},
-			  });
+			  },{new:true});
+			  if (!updatedUser) {
+				return NextResponse.json({error:"User Not Found"},{status:404})
+			  }
 		}
 		var transport = nodemailer.createTransport({
 			host: "sandbox.smtp.mailtrap.io",
