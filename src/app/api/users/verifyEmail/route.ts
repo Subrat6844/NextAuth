@@ -3,7 +3,7 @@ import User from "@/models/userModel";
 import { NextRequest, NextResponse } from "next/server";
 
 dbConnection();
-async function POST(request: NextRequest) {
+export async function POST(request: NextRequest) {
 	try {
 		const { token } = await request.json();
 

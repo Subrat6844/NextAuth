@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 import User from "@/models/userModel";
 dbConnection();
 
-async function POST(request: NextRequest) {
+export async function POST(request: NextRequest) {
 	const token = request.cookies.get("auth")?.value || "";
 	const decodedToken: any = jwt.verify(token, process.env.JWT_SECRET!);
 

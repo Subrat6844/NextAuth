@@ -2,7 +2,7 @@ import { dbConnection } from "@/dbConnection/dbConnection";
 import { NextRequest, NextResponse } from "next/server";
 
 dbConnection();
-async function GET() {
+export async function GET() {
 	const response = NextResponse.json(
 		{ message: "Logout Success", success: true },
 		{ status: 200 }
