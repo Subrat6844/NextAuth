@@ -18,7 +18,7 @@ export async function POST(request: NextRequest) {
 		);
 	}
 
-	const user = await User.findOne({ email }).select("-password");
+	const user = await User.findOne({ email });
 	if (!user) {
 		return NextResponse.json(
 			{ error: "User does not Exists" },
