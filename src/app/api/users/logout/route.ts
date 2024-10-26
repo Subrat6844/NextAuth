@@ -1,9 +1,15 @@
 import { dbConnection } from "@/dbConnection/dbConnection";
-import User from "@/models/userModel";
-import bcryptjs from "bcryptjs";
 import { NextRequest, NextResponse } from "next/server";
 
-dbConnection()
+dbConnection();
 async function POST() {
-
+	const response = NextResponse.json(
+		{ message: "Logout Success", success: true },
+		{ status: 200 }
+	);
+	response.cookies.set("auth", "", {
+		httpOnly: true,
+		expires: new Date(0),
+	});
+	return response;
 }
