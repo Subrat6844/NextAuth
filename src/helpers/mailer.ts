@@ -5,16 +5,20 @@ export const sendMail = async ({ email, mailType, userId }: any) => {
 	try {
 		const token = uuid();
 		if (mailType === "verifyEmail") {
-			await User.findByIdAndUpdate(userId, {
-				verifyToken: token,
-				verifyTokenExpiry: Date.now() + 3600000,
-			});
+			await User.findByIdAndUpdate(userId,  {
+				$set: {
+				  verifyToken: token,
+				  verifyTokenExpiry: Date.now() + 3600000,
+				},
+			  });
 		}
 		if (mailType === "forgotPassword") {
 			await User.findByIdAndUpdate(userId, {
-				forgotPasswordToken: token,
-				forgotPasswordExpiry: Date.now() + 3600000,
-			});
+				$set: {
+				  forgotPasswordToken: token,
+				  forgotPasswordExpiry: Date.now() + 3600000,
+				},
+			  });
 		}
 		var transport = nodemailer.createTransport({
 			host: "sandbox.smtp.mailtrap.io",
