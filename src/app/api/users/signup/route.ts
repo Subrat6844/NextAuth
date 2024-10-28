@@ -5,8 +5,6 @@ import bcryptjs from "bcryptjs";
 import { NextRequest, NextResponse } from "next/server";
 
 dbConnection()
-
-
 export async function POST(request: NextRequest) {
 	try {
 		const body = await request.json();
@@ -29,11 +27,17 @@ export async function POST(request: NextRequest) {
 		}
 
 		const salts = await bcryptjs.genSalt(10);
-
 		const hashedPassword = await bcryptjs.hash(password, salts);
 		const createdUser = new User({ userName, email, password: hashedPassword });
 		const savedUser = await createdUser.save();
-		await sendMail({ email, mailType: "verifyEmail", userId: savedUser._id });
+		try {
+			await sendMail({ email, mailType: "verifyEmail", userId: savedUser._id });
+		} catch (error:any) {
+			await User.findByIdAndDelete(savedUser._id)
+			return NextResponse.json({
+				error:error.message || "Something went wrong while sending email"
+			},{status:400})
+		}
 		return NextResponse.json(
 			{
 				message: "User created successfully",
