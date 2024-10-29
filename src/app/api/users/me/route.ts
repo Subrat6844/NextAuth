@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 import User from "@/models/userModel";
 dbConnection();
 
-export async function POST(request: NextRequest) {
+export async function GET(request: NextRequest) {
 	const token = request.cookies.get("auth")?.value || "";
 	const decodedToken: any = jwt.verify(token, process.env.JWT_SECRET!);
 	const user = await User.findById(decodedToken.id).select("-password");
